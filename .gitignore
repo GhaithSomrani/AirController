@@ -1,3 +1,6 @@
+gitignore
+.gitignore
+docs/
 # Python bytecode/cache
 __pycache__/
 *.py[cod]
