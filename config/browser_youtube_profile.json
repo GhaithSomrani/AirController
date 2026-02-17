@@ -1,0 +1,154 @@
+{
+  "profile_name": "browser_youtube",
+  "global": {
+    "dynamic_cooldown": 0.35
+  },
+  "actions": {
+    "left_click": {
+      "type": "mouse_click",
+      "button": "left"
+    },
+    "right_click": {
+      "type": "mouse_click",
+      "button": "right"
+    },
+    "open_youtube_video": {
+      "type": "open_url",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    "yt_play_pause": {
+      "type": "key",
+      "key": "k"
+    },
+    "yt_fullscreen": {
+      "type": "key",
+      "key": "f"
+    },
+    "yt_seek_back": {
+      "type": "key",
+      "key": "j"
+    },
+    "yt_seek_forward": {
+      "type": "key",
+      "key": "l"
+    },
+    "yt_volume_up": {
+      "type": "key",
+      "key": "up"
+    },
+    "yt_volume_down": {
+      "type": "key",
+      "key": "down"
+    },
+    "browser_back": {
+      "type": "hotkey",
+      "keys": ["alt", "left"]
+    },
+    "browser_forward": {
+      "type": "hotkey",
+      "keys": ["alt", "right"]
+    },
+    "browser_refresh": {
+      "type": "hotkey",
+      "keys": ["ctrl", "r"]
+    }
+  },
+  "mappings": [
+    {
+      "side": "LEFT",
+      "gesture": "SWIPE_UP",
+      "action": "open_youtube_video",
+      "min_confidence": 0.88,
+      "priority": 100,
+      "cooldown_s": 2.0
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "PINCH",
+      "action": "left_click",
+      "min_confidence": 0.80,
+      "priority": 95,
+      "cooldown_s": 0.35
+    },
+    {
+      "side": "LEFT",
+      "gesture": "PINCH",
+      "action": "right_click",
+      "min_confidence": 0.80,
+      "priority": 90,
+      "cooldown_s": 0.35
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "TWO_UP",
+      "action": "yt_volume_up",
+      "min_confidence": 0.80,
+      "priority": 80,
+      "cooldown_s": 0.25
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "TWO_DOWN",
+      "action": "yt_volume_down",
+      "min_confidence": 0.80,
+      "priority": 80,
+      "cooldown_s": 0.25
+    },
+    {
+      "side": "LEFT",
+      "gesture": "TWO_UP",
+      "action": "yt_play_pause",
+      "min_confidence": 0.80,
+      "priority": 85,
+      "cooldown_s": 0.30
+    },
+    {
+      "side": "LEFT",
+      "gesture": "TWO_DOWN",
+      "action": "yt_fullscreen",
+      "min_confidence": 0.80,
+      "priority": 85,
+      "cooldown_s": 0.50
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "SWIPE_LEFT",
+      "action": "browser_back",
+      "min_confidence": 0.86,
+      "priority": 75,
+      "cooldown_s": 0.45
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "SWIPE_RIGHT",
+      "action": "browser_forward",
+      "min_confidence": 0.86,
+      "priority": 75,
+      "cooldown_s": 0.45
+    },
+    {
+      "side": "LEFT",
+      "gesture": "SWIPE_DOWN",
+      "action": "browser_refresh",
+      "min_confidence": 0.86,
+      "priority": 70,
+      "cooldown_s": 0.90
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "PULL",
+      "action": "yt_seek_back",
+      "min_confidence": 0.88,
+      "priority": 78,
+      "cooldown_s": 0.35
+    },
+    {
+      "side": "RIGHT",
+      "gesture": "PUSH",
+      "action": "yt_seek_forward",
+      "min_confidence": 0.88,
+      "priority": 78,
+      "cooldown_s": 0.35
+    }
+  ]
+}

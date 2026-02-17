@@ -102,3 +102,30 @@ AirController/
 - For accurate depth and motion dynamics, a depth camera is strongly recommended.
 - Machine/mechanical control must include a strict safety layer before deployment.
 
+## Browser + YouTube Control Profile
+- Default runtime now loads: `config/browser_youtube_profile.json`
+- You can edit this file to rebind any gesture/action and cooldown.
+
+### Included gesture bindings
+- `LEFT SWIPE_UP` -> open YouTube video URL
+- `LEFT TWO_UP` -> YouTube play/pause (`k`)
+- `LEFT TWO_DOWN` -> YouTube fullscreen (`f`)
+- `RIGHT PUSH` -> YouTube seek forward (`l`)
+- `RIGHT PULL` -> YouTube seek backward (`j`)
+- `RIGHT TWO_UP` -> volume up (`up`)
+- `RIGHT TWO_DOWN` -> volume down (`down`)
+- `RIGHT SWIPE_LEFT` -> browser back
+- `RIGHT SWIPE_RIGHT` -> browser forward
+- `LEFT SWIPE_DOWN` -> browser refresh
+- `RIGHT PINCH` -> left click
+- `LEFT PINCH` -> right click
+
+### Change the video to play
+Edit:
+- `config/browser_youtube_profile.json`
+
+Update action:
+- `actions.open_youtube_video.url`
+
+Then run:
+- `.\venv\Scripts\python.exe .\main.py`

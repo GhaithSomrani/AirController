@@ -52,6 +52,7 @@ def main():
         scroll_cooldown=0.20,
         scroll_amount=120,
         cursor_alpha=0.25,
+        profile_path=Path("config") / "browser_youtube_profile.json",
     )
 
     try:
