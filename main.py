@@ -13,7 +13,7 @@ import cv2
 import pyautogui
 
 from engine.actions import ActionEngine
-from engine.gestures import detect_gestures_for_frame
+from engine.gestures import GestureRecognizer
 from engine.motion import MotionEstimator
 from engine.overlay import draw_frame_overlay
 from engine.overlay import draw_hand
@@ -46,6 +46,7 @@ def main():
     model_path = Path("models") / "hand_landmarker.task"
     tracker = HandTracker(model_path=model_path, num_hands=2)
     motion = MotionEstimator(smoothing_alpha=0.35, max_stale_ms=250)
+    recognizer = GestureRecognizer(history_size=18)
     actions = ActionEngine(
         click_cooldown=0.45,
         scroll_cooldown=0.20,
@@ -75,10 +76,10 @@ def main():
             if cursor_hand:
                 actions.move_cursor_from_hand(cursor_hand)
 
-            gestures = detect_gestures_for_frame(frame_state)
+            gestures = recognizer.detect_for_frame(frame_state)
             action_text = actions.apply(gestures)
 
-            draw_frame_overlay(frame, frame_state, action_text)
+            draw_frame_overlay(frame, frame_state, action_text, gestures=gestures)
             cv2.imshow("AirController", frame)
 
             if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -91,4 +92,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

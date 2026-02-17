@@ -22,6 +22,7 @@ class ActionEngine:
         self.gesture_state = GestureState()
         self.smooth_x = 0.0
         self.smooth_y = 0.0
+        self.last_dynamic_time = 0.0
 
         self.screen_w, self.screen_h = pyautogui.size()
 
@@ -45,37 +46,57 @@ class ActionEngine:
         - LEFT PINCH -> right click
         - RIGHT TWO_UP -> scroll up
         - RIGHT TWO_DOWN -> scroll down
+        - RIGHT SWIPE_LEFT/RIGHT -> left/right arrow
+        - RIGHT SWIPE_UP/SWIPE_DOWN -> page up/down
+        - RIGHT PUSH/PULL -> Ctrl + '+' / Ctrl + '-'
         """
         now = time.time()
         action_text = "Tracking"
 
         right = gestures.get("RIGHT")
         left = gestures.get("LEFT")
+        right_name = right.name if right else None
+        left_name = left.name if left else None
 
-        if right == "PINCH":
-            action_text = "RIGHT PINCH -> LEFT CLICK"
+        if right_name == "PINCH":
+            action_text = f"RIGHT PINCH ({right.confidence:.2f}) -> LEFT CLICK"
             if now - self.gesture_state.last_click_time >= self.click_cooldown:
                 pyautogui.click(button="left")
                 self.gesture_state.last_click_time = now
-        elif left == "PINCH":
-            action_text = "LEFT PINCH -> RIGHT CLICK"
+        elif left_name == "PINCH":
+            action_text = f"LEFT PINCH ({left.confidence:.2f}) -> RIGHT CLICK"
             if now - self.gesture_state.last_click_time >= self.click_cooldown:
                 pyautogui.click(button="right")
                 self.gesture_state.last_click_time = now
-        elif right == "TWO_UP":
-            action_text = "RIGHT TWO UP -> SCROLL UP"
+        elif right_name == "TWO_UP":
+            action_text = f"RIGHT TWO UP ({right.confidence:.2f}) -> SCROLL UP"
             if now - self.gesture_state.last_scroll_time >= self.scroll_cooldown:
                 pyautogui.scroll(self.scroll_amount)
                 self.gesture_state.last_scroll_time = now
-        elif right == "TWO_DOWN":
-            action_text = "RIGHT TWO DOWN -> SCROLL DOWN"
+        elif right_name == "TWO_DOWN":
+            action_text = f"RIGHT TWO DOWN ({right.confidence:.2f}) -> SCROLL DOWN"
             if now - self.gesture_state.last_scroll_time >= self.scroll_cooldown:
                 pyautogui.scroll(-self.scroll_amount)
                 self.gesture_state.last_scroll_time = now
-        elif right == "OPEN_PALM" or left == "OPEN_PALM":
+        elif right_name == "OPEN_PALM" or left_name == "OPEN_PALM":
             action_text = "OPEN PALM -> NO ACTION"
+        elif right_name in {"SWIPE_LEFT", "SWIPE_RIGHT", "SWIPE_UP", "SWIPE_DOWN", "PUSH", "PULL"}:
+            action_text = f"RIGHT {right_name} ({right.confidence:.2f})"
+            if now - self.last_dynamic_time >= 0.30:
+                if right_name == "SWIPE_LEFT":
+                    pyautogui.press("left")
+                elif right_name == "SWIPE_RIGHT":
+                    pyautogui.press("right")
+                elif right_name == "SWIPE_UP":
+                    pyautogui.press("pageup")
+                elif right_name == "SWIPE_DOWN":
+                    pyautogui.press("pagedown")
+                elif right_name == "PUSH":
+                    pyautogui.hotkey("ctrl", "+")
+                elif right_name == "PULL":
+                    pyautogui.hotkey("ctrl", "-")
+                self.last_dynamic_time = now
         else:
             action_text = "Tracking hands"
 
         return action_text
-

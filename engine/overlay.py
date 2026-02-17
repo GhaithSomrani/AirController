@@ -39,7 +39,7 @@ def draw_hand(frame, lm, color=(0, 255, 0)):
         cv2.circle(frame, (px, py), 4, (0, 200, 255), -1)
 
 
-def draw_frame_overlay(frame, frame_state, action_text: str):
+def draw_frame_overlay(frame, frame_state, action_text: str, gestures=None):
     cv2.putText(
         frame,
         action_text,
@@ -76,3 +76,17 @@ def draw_frame_overlay(frame, frame_state, action_text: str):
         )
         y += 25
 
+    if gestures:
+        y += 5
+        for side, candidate in gestures.items():
+            line = f"{side} gesture={candidate.name} conf={candidate.confidence:.2f} src={candidate.source}"
+            cv2.putText(
+                frame,
+                line,
+                (10, y),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.52,
+                (180, 255, 180),
+                2,
+            )
+            y += 22
